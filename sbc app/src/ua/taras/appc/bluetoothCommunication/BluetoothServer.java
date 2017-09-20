@@ -21,6 +21,8 @@ public class BluetoothServer implements IServer{
 	AcceptThread accept_thread;
 	public ConnectedThread connected_thread;
 	
+	private boolean bluetooth_connection_established = false;
+	
 	private final ClientRequestHandler client_request_handler;
 	
 	public BluetoothServer(Activity context){
@@ -51,6 +53,8 @@ public class BluetoothServer implements IServer{
 		// over Handler object to BluetoothServer class 
 		connected_thread = new ConnectedThread(socket, client_request_handler);
 		connected_thread.start();
+		
+		bluetooth_connection_established = true;
 	}
 	
 	/** CALLBACKS FROM CLIENT REQUEST HANDLER **/
@@ -95,21 +99,23 @@ public class BluetoothServer implements IServer{
 
 	@Override
 	public void on_open_door_access_granted() {
-		byte[] msg_buff = MsgManager.make_response_msg(
-				Constants.MSG_OPEN_DOOR,
-				Constants.MSG_STATUS_OPEN_DOOR_SUCCESS
-				);
-		connected_thread.write_to_client(msg_buff);	
+		if (bluetooth_connection_established) {
+			byte[] msg_buff = MsgManager.make_response_msg(
+					Constants.MSG_OPEN_DOOR,
+					Constants.MSG_STATUS_OPEN_DOOR_SUCCESS);
+			connected_thread.write_to_client(msg_buff);
+		}
 		
 	}
 
 	@Override
 	public void on_open_door_access_denied() {
-		byte[] msg_buff = MsgManager.make_response_msg(
-				Constants.MSG_OPEN_DOOR,
-				Constants.MSG_STATUS_OPEN_DOOR_FAILURE
-				);
-		connected_thread.write_to_client(msg_buff);	
+		if (bluetooth_connection_established) {
+			byte[] msg_buff = MsgManager.make_response_msg(
+					Constants.MSG_OPEN_DOOR,
+					Constants.MSG_STATUS_OPEN_DOOR_FAILURE);
+			connected_thread.write_to_client(msg_buff);
+		}
 		
 	}
 	

@@ -8,16 +8,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ua.taras.appc.MainActivity" >
 
-    <Button
-        android:id="@+id/b_configure_uart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Configure UART" />
-    <Button
-        android:id="@+id/b_read_rfid_card"
-        android:layout_below="@+id/b_configure_uart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start reading RFID card" />
-
 </RelativeLayout>

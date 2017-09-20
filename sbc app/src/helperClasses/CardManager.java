@@ -21,7 +21,9 @@ public class CardManager {
 	}
 
 	public boolean is_card_already_added(String card_id) {
-
+		// new recast point
+		binary_to_hex(card_id);
+		
 		String string_card_array = pref.get_all_cards_id();
 
 		try {
@@ -50,6 +52,16 @@ public class CardManager {
 				builder.append(array[i]);
 		}
 		return builder.toString();
+	}
+	
+	public String binary_to_hex(String bits){
+		String bits_24 = bits.substring(1, bits.length() - 1);
+		int decimal = Integer.parseInt(bits_24,2);
+	    String hex_str = Integer.toString(decimal,16);
+		Log.v("C_JAVA", "CARD_ID_BINARY_24 " + bits_24);
+		Log.v("C_JAVA", "CARD_ID_HEX " + hex_str);
+
+	    return hex_str;
 	}
 	
 }

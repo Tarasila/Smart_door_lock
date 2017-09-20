@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import helperClasses.CardManager;
 import helperClasses.Constants;
@@ -25,8 +26,8 @@ import listeners.DoorRunnable;
 
 public class MainActivity extends Activity implements IController{
 
-	private Button b_configure;
-	private Button b_start_reading_rfid_card;
+	//private Button b_configure;
+	//private Button b_start_reading_rfid_card;
 	
 	private Process process;
 	
@@ -43,9 +44,9 @@ public class MainActivity extends Activity implements IController{
 		@Override
 		public void onClick(View v) {
 			switch(v.getId()){
-				case R.id.b_read_rfid_card:
+				/*case R.id.b_read_rfid_card:
 					//gpioLineVal(fd26, fd33);
-				break;
+				break;*/
 			}
 		}
 	};
@@ -55,6 +56,7 @@ public class MainActivity extends Activity implements IController{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		bluetooth_server = new BluetoothServer(this);
 		card_manager = new CardManager(this);
@@ -72,11 +74,11 @@ public class MainActivity extends Activity implements IController{
 			e.printStackTrace();
 		}
 		
-		b_start_reading_rfid_card = (Button) findViewById(R.id.b_read_rfid_card);
-		b_configure				  = (Button) findViewById(R.id.b_configure_uart);
+		//b_start_reading_rfid_card = (Button) findViewById(R.id.b_read_rfid_card);
+		//b_configure				  = (Button) findViewById(R.id.b_configure_uart);
 		
 		
-        b_start_reading_rfid_card.setOnClickListener(onClickListener);    
+        //b_start_reading_rfid_card.setOnClickListener(onClickListener);    
 	}
 
 	private void export_gpio225_and_gpio234() throws IOException{
@@ -145,7 +147,6 @@ public class MainActivity extends Activity implements IController{
 		} else {
 			Log.v("C_JAVA", "DOOR LISTENER HAS BEEN INTERRUPTED");
 			//rfid_listener_manager.start_add_card_runnable();
-
 		}	
 	}
 	
@@ -180,9 +181,7 @@ public class MainActivity extends Activity implements IController{
 				Log.v("C_JAVA", "CARD ADDING_FAIL_NOT_UNIQUE");
 				rfid_listener_manager.suspend_add_card_runnable();
 			}
-
 		}
-		
 	}
 	
 	//** JNI **//

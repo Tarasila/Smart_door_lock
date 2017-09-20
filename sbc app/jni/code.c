@@ -79,7 +79,6 @@ jobjectArray idArray;
 idArray = (jobjectArray)(*env)->NewObjectArray(env, 29, (*env)->FindClass(env, "java/lang/String"), (*env)->NewStringUTF(env, ""));
 
 do {
-
 	pollFd[0].fd = iFd26;
 	pollFd[0].events = POLLPRI | POLLERR;
 	pollFd[0].revents = 0;
@@ -99,7 +98,7 @@ do {
 					return idArray;
 			}
 		} else {
-			// interruption occurred...reset flag
+			// interruption occurred. Reset flag.
 			interruption_flag = 0;
 			return NULL;
 		}
@@ -127,16 +126,12 @@ do {
 		if(err != 1)
 			LOGD("C_gpio33_error", "");
 
-
 		(*env)->SetObjectArrayElement(env, idArray, counter, (*env)->NewStringUTF(env, "0"));
 		counter++;
 	}
 	LOGD("C_COUNTER_%d", counter);
 
 } while(counter < 28);
-
-
-
 
 return idArray;
 
